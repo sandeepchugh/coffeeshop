@@ -1,6 +1,26 @@
-module "iam_instance_profile" {
-  source  = "scottwinkler/iip/aws"
-  actions = ["logs:*", "rds:*"]
+resource "aws_iam_role" "role" {
+  name = "test_role"
+  path = "/"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Principal": {
+               "Service": "ec2.amazonaws.com"
+            },
+            "Effect": "Allow",
+            "Sid": ""
+        }
+    ]
+}
+EOF
+}
+
+resource "aws_iam_instance_profile" "instance_profile" {
+  role = aws_iam_role.role.name
 }
  
 data "template_cloudinit_config" "config" {
@@ -28,7 +48,7 @@ resource "aws_launch_template" "webserver" {
   user_data     = data.template_cloudinit_config.config.rendered
   key_name      = var.ssh_keypair
   iam_instance_profile {
-    name = module.iam_instance_profile.name
+    name =  aws_iam_instance_profile.instance_profile.arn
   }
   vpc_security_group_ids = [var.sg.websvr]
 }
