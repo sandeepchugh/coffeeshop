@@ -62,3 +62,7 @@ variable "az1c" {
     type = string
     default = "us-east-1c"
 }
+
+variable "AlbSG" {
+    type = string
+}
