@@ -18,7 +18,7 @@ resource "aws_subnet" "public_1b" {
   }
 }
 
-resource "aws_subnet" "private_1a" {
+resource "aws_subnet" "private_web_1a" {
   vpc_id = aws_vpc.application_vpc.id
   cidr_block = var.subnet_private_web_1a_cidr_block
   map_public_ip_on_launch = "false"
@@ -28,7 +28,7 @@ resource "aws_subnet" "private_1a" {
   }
 }
 
-resource "aws_subnet" "private_1b" {
+resource "aws_subnet" "private_web_1b" {
   vpc_id = aws_vpc.application_vpc.id
   cidr_block = var.subnet_private_web_1b_cidr_block
   map_public_ip_on_launch = "false"
@@ -38,7 +38,7 @@ resource "aws_subnet" "private_1b" {
   }
 }
 
-resource "aws_subnet" "private_web_1a" {
+resource "aws_subnet" "private_rds_1a" {
   vpc_id = "${aws_vpc.application_vpc.id}"
   cidr_block = var.subnet_private_rds_1a_cidr_block
   map_public_ip_on_launch = "false"
@@ -49,7 +49,7 @@ resource "aws_subnet" "private_web_1a" {
   }
 }
 
-resource "aws_subnet" "private_web_1b" {
+resource "aws_subnet" "private_rds_1b" {
   vpc_id = "${aws_vpc.application_vpc.id}"
   cidr_block =  var.subnet_private_rds_1b_cidr_block
   map_public_ip_on_launch = "false"
